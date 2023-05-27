@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "firebase": "^9.19.1",
+    "registry.npmjs.org": "^1.0.1"
+  }
+}
