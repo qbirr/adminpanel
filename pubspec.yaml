@@ -45,7 +45,7 @@ dependencies:
   firebase_storage: ^11.1.0
   uuid: ^3.0.7
   fluttertoast: ^8.2.1
-  firebase: ^9.0.3
+  # firebase: ^9.0.3
   firebase_auth: ^4.6.1
 
 dev_dependencies:
