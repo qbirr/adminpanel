@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:useradmin/screen/main_screen.dart';
 
 class LoginForm extends StatefulWidget {
   static const routeName = '/LoginForm';
@@ -25,19 +26,58 @@ class _LoginFormState extends State<LoginForm> {
       // Get the current user's ID
       String userId = userCredential.user!.uid;
 
-      // Check if the user exists in the 'admin' collection
+      // Check if the user exists in the 'admin' collection with role 'admin'
       DocumentSnapshot adminSnapshot = await _firestore
           .collection('admin')
           .doc(userId)
           .get();
 
       if (adminSnapshot.exists) {
-        // User is an admin, navigate to the admin screen
-        Navigator.pushReplacementNamed(context, '/admin');
-      } else {
-        // User is not an admin, navigate to the user screen
-        Navigator.pushReplacementNamed(context, '/admin');
+        Map<String, dynamic>? adminData = adminSnapshot.data() as Map<String, dynamic>?;
+        String? role = adminData?['role'] as String?;
+        print('Role: $role');
+
+        if (role == 'admin') {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Login Successful'),
+                content: Text('You are logged in as admin.'),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text('OK'),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => MainScreen()));
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+          return;
+        }
       }
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Login Failed'),
+            content: Text('You are not authorized to access the admin panel.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+               Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        },
+      );
     } catch (e) {
       // Login failed, show error message
       showDialog(
