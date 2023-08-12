@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 import 'package:useradmin/admin.dart';
 import 'package:useradmin/user.dart';
@@ -54,7 +56,7 @@ class _MyAppState extends State<MyApp> {
       ],
       child:
           Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
-        return MaterialApp(
+        return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: "Toko Buah",
           theme: Styles.themeData(themeProvider.getDarkTheme, context),
@@ -65,6 +67,7 @@ class _MyAppState extends State<MyApp> {
             LoginForm.routeName: (context) => LoginForm(),
             UploadProductForm.routeName: (context) => const UploadProductForm()
           },
+          builder: EasyLoading.init(),
         );
       }),
     );

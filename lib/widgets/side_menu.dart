@@ -3,6 +3,7 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:useradmin/inner_screen/all_orders_screen.dart';
 import 'package:useradmin/inner_screen/all_products.dart';
+import 'package:useradmin/screen/discount_screen.dart';
 import 'package:useradmin/widgets/text_widgets.dart';
 
 import '../provider/dark_theme_provider.dart';
@@ -23,7 +24,7 @@ class _SideMenuState extends State<SideMenu> {
   Widget build(BuildContext context) {
     final theme = Utils(context).getTheme;
     final themeState = Provider.of<DarkThemeProvider>(context);
-  
+
     final color = Utils(context).color;
     return Drawer(
       child: ListView(
@@ -47,22 +48,29 @@ class _SideMenuState extends State<SideMenu> {
           DrawerListTile(
             title: "View all product",
             press: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const AllProductsScreen(),
-                ));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => const AllProductsScreen(),
+              ));
             },
             icon: Icons.store,
           ),
           DrawerListTile(
             title: "View all order",
             press: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => const AllOrdersScreen(),
-                  ));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => const AllOrdersScreen(),
+              ));
             },
             icon: IconlyBold.bag_2,
+          ),
+          DrawerListTile(
+            title: "Discount",
+            press: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => const DiscountScreen(),
+              ));
+            },
+            icon: IconlyBold.discount,
           ),
           SwitchListTile(
               title: const Text('Theme'),
